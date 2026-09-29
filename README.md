@@ -117,3 +117,8 @@ files below into `data/<dataset>/` (paths are set in `configs/datasets/<dataset>
 | Banksim | `banksim/bs140513_032310.csv` | Kaggle, "BankSim" (Lopez-Rojas and Axelsson, 2014), <https://www.kaggle.com/datasets/ealaxi/banksim1> |
 | Creditcard | `creditcard/creditcard.csv` | Kaggle, "Credit Card Fraud Detection" (Dal Pozzolo et al., 2015), <https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud> |
 | Twitterbot | `twitterbot/twitter_human_bots_dataset.csv` | Kaggle, "Twitter Bots Accounts", <https://www.kaggle.com/datasets/davidmartngutirrez/twitter-bots-accounts> |
+
+## License
+
+Copyright 2026 Cheng-Yu Lin and Jyh-Shing Roger Jang. Licensed under the
+[Apache License, Version 2.0](LICENSE).

@@ -19,3 +19,4 @@ First public release.
   sources.
 - `python main.py` reproduces the paper's Credit Default / LightGBM / seed-11
   test AP (0.5502016) exactly.
+- Licensed under the Apache License 2.0.
