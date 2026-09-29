@@ -1,0 +1,138 @@
+# FORGE parameters.
+#
+# Every key here is a key of the configuration dictionary used by the code
+# (see forge/config.py). Dataset files in configs/datasets/ and your own YAML
+# file (python main.py --config my.yaml) override these values; command-line
+# options override everything.
+#
+# Comments name the paper section, equation or table a value comes from
+# (numbers as in the paper PDF). "Code detail" marks a
+# value the paper does not state; "Paper difference" marks a place where the
+# code differs from the paper text.
+
+# --------------------------------------------------------------------- run
+seed: 11                    # Sec. V-D: seeds 11, 12, 13
+learner: lightgbm           # Sec. V-A: lightgbm | xgboost | catboost
+                            # or your own "module:function" (see examples/my_learner.py);
+                            # its settings go under a key with the same name
+threads: 8                  # Code detail (env FORGE_THREADS overrides)
+
+# ------------------------------------------- data partitioning (Sec. IV-B)
+split_seed: 42              # fixed seed of the stratified 64/16/20 split (data without event time)
+validation_block_weights: [3, 1, 1]   # S1 blocks V1:V2:V3, Eq. (1)
+oof_folds: 4                # four-fold OOF predictions on I
+
+# ------------------------------------------- learners (Table 3, Sec. V-A)
+lightgbm:
+  n_estimators: 400
+  learning_rate: 0.05
+  num_leaves: 63
+  min_child_samples: 20
+  # Paper difference: the paper lists "subsample 0.8". In LightGBM, row
+  # subsampling only takes effect with subsample_freq > 0, which this code
+  # does not set, so rows are not subsampled.
+  subsample: 0.8
+  colsample_bytree: 0.8
+xgboost:
+  n_estimators: 400
+  learning_rate: 0.05
+  max_depth: 6
+  min_child_weight: 1
+  tree_method: hist
+  device: cpu               # Code detail: CPU only (also stops XGBoost from probing a busy GPU)
+catboost:
+  iterations: 400
+  learning_rate: 0.05
+  depth: 6
+  l2_leaf_reg: 3
+  grow_policy: SymmetricTree
+
+# ------------------------------------------- representation (code detail; the paper only says
+# "original columns with learner-required preprocessing")
+category_min_unique: 10     # an integer column with 10 < distinct values < ... is also treated as categorical
+category_max_unique: 50000  # ... min(50,000, half the rows)
+log_skew: 2                 # a non-negative column with skewness > 2 also gets a log1p column
+encoding_folds: 5           # folds of the out-of-fold target/frequency encodings of the search representation
+te_alpha: 20                # smoothing alpha of the target encoding, Eq. (15); also used for the search representation
+te_blocks: 5                # S2.1.1 expanding blocks of the expert target encoding (code detail: five)
+
+# ------------------------------------------- routing rule (Sec. IV-C, S1.2 "Routing")
+route_shift_share: 0.20     # R0 is skipped when more than this share of raw columns shift between I and V
+route_unseen_rate: 0.20     # a categorical column shifts when its unseen-category rate on V exceeds this
+
+# ------------------------------------------- R0 proposal (Sec. IV-C, S1.1.1 "R0: free-form proposal")
+llm_proposals_per_order: 8  # "Each call requests up to eight features"
+max_initial_candidates: 36  # "at most 36 valid candidates are kept in call order"
+probe_trees: 150            # probe model: "a 150-tree model of the same learner type"
+probe_rows: 60000           # "fitted on up to the first 60,000 rows of I"
+probe_top_columns: 10       # "its ten most important columns"
+probe_top_pairs: 12         # "twelve most frequently co-used column pairs"
+
+# ------------------------------------------- stability screen (Sec. IV-C, S1.1.2, Eq. (8))
+psi_max: 0.25
+advauc_band: 0.15           # |AdvAUC - 0.5| <= 0.15
+
+# ------------------------------------------- CoF rounds and cycles (Sec. IV-C, S1.1.3 and Algorithm 1)
+max_cof_rounds: 3           # R1-R3
+cof_cycles: 3               # at most three cycles per round
+max_empty_cof_rounds: 2     # S1 ends after two CoF rounds that admit no new feature (gate-rejected rounds do not count)
+candidate_caps: [128, 96, 64]   # candidate pool caps of cycles 1, 2, 3
+dedup_abs_spearman: 0.95    # near-duplicate removal
+entry_alpha: 0.05           # tau = z_{1-alpha} / sqrt(n_I^+), Eq. (12), z_0.95 = 1.645
+entry_k_cap: 12             # greedy entry stops after 12 admitted candidates
+discovery_row_cap: 200000   # scoring rows: a fixed random subsample of at most 200,000 rows of I
+residual_folds: 5           # five folds G1..G5 of the Ridge residualization, Eq. (3)
+ridge_alpha: 1.0            # Code detail
+trailing_fraction: 0.30     # trailing-window check on the last 30% of I
+exit_max_drops: 2           # permutation exit removes at most two features per round
+evidence_top: 12            # Code detail: highest-scoring candidates shown to the LLM
+
+# ------------------------------------------- round validation (Sec. IV-C, S1.2, Eq. (14))
+gate_harm_k: 2.0            # Delta_h >= -2 SE_h
+bootstrap_repeats: 1000     # Code detail: paired bootstrap replicates
+
+# ------------------------------------------- experts (Sec. IV-D)
+expert_min_half_positives: 100   # S2 is disabled when a V half has fewer than 100 positives
+expert_benefit_k: 1.0       # Delta_h >= SE_h on both halves, Eq. (28)
+expert_bootstrap_repeats: 600    # Code detail
+blend_weights: [0.05, 0.10, 0.15, 0.20, 0.30, 0.40, 0.50]   # Eq. (23)
+expert_weight_blocks: 5     # five contiguous blocks B1..B5 of the weight selection, Eq. (24)
+te_max_unseen: 0.20         # S2.1.1: unseen-category rate on V at most 20%
+slice_max_columns: 25       # Code detail: slices are built from the first 25 model columns
+slice_quintiles: 5          # S2.1.2: five quintile intervals per continuous feature
+slice_max_values: 8         # Code detail: at most eight values of a low-cardinality feature
+slice_min_coverage: 0.05    # S2.1.2: subgroups covering less than 5% ...
+slice_max_coverage: 0.60    # ... or more than 60% of I are removed
+slice_min_positives: 30     # ... as are subgroups with fewer than 30 positives
+slice_min_lift: 1.15        # L(Q) > max(sqrt(n_I^+ / n_Q^+), 1.15)
+slice_max_experts: 2        # at most two slice experts
+slice_min_rows: 800         # Code detail: a selected slice also needs 800 rows and 40 positives in I
+slice_min_positives_fit: 40
+slice_min_v_rows: 100       # Code detail: and 100 rows in V
+recency_levels: [0, 1, 2, 3]     # windows W_k = most recent 2^-k of I+V, Eq. (18)
+recency_min_rows: 400       # a window with fewer than 400 samples ...
+recency_min_positives: 20   # ... or 20 positives is not evaluated
+recency_auc_margin: 0.06    # direction thresholds 0.56 / 0.44, Eq. (21)
+recency_min_fit_rows: 800   # the recency expert's training subset needs 800 samples ...
+recency_min_fit_positives: 40    # ... and 40 positives
+
+# ------------------------------------------- LLM proposer (Sec. IV-C, S1.1.1)
+# llm_mode:
+#   replay   use recorded responses (assets/ for Credit Default, or .cache/llm/) - no LLM needed
+#   api      any OpenAI-compatible chat-completions endpoint (llm_api_url, key in $llm_api_key_env)
+#   command  any command-line tool: the prompt is written to its stdin, the JSON answer is read
+#            from {output} if the tool writes it there, otherwise from stdout. {schema} is the
+#            path of the JSON schema of the answer. Examples:
+#              codex exec --skip-git-repo-check --output-schema {schema} -o {output} -
+#              claude -p --output-format text
+#              ollama run qwen3 --format json
+llm_mode: replay
+llm_model: gpt-5.5          # Sec. V-C: "The proposal model is gpt-5.5" (api mode; env FORGE_LLM_MODEL)
+llm_api_url: ""             # api mode (env FORGE_LLM_API_URL)
+llm_api_key_env: FORGE_LLM_API_KEY   # name of the environment variable holding the API key
+llm_command: ""             # command mode
+llm_timeout_seconds: 900
+
+# ------------------------------------------- files (relative to the repository root)
+data_dir: data
+cache_dir: .cache

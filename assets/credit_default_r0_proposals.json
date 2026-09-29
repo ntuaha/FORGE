@@ -1,0 +1,214 @@
+{
+  "description": "Frozen R0 free-form proposals for UCI Credit Default (LightGBM, seed 11, split seed 42). Five LLM calls (unary, binary, ternary, related-column, complement); the response order is preserved because it determines the shadow-feature random stream.",
+  "dataset": "credit_default",
+  "model": "gpt-5.5",
+  "round": 0,
+  "calls": 5,
+  "proposals_sha256": "22f39769e002b1e85ab4fee58b138799bf418ca36d4641b67d8fe6d63ca0d1bb",
+  "proposals": {
+    "free1_limit_bal_log": {
+      "expression": "np.log1p(np.maximum(pd.to_numeric(df['limit_bal'], errors='coerce'), 0.0))",
+      "family": "unary_monotone_log",
+      "description": "Captures credit capacity with diminishing marginal effect, since default risk often changes more between low and mid limits than between high limits.",
+      "executor": "pointwise"
+    },
+    "free1_age_sqrt_over_20": {
+      "expression": "np.sqrt(np.maximum(pd.to_numeric(df['age'], errors='coerce') - 20.0, 0.0))",
+      "family": "unary_monotone_reshape",
+      "description": "Captures lifecycle risk as a smooth monotone age effect with reduced sensitivity at older ages.",
+      "executor": "pointwise"
+    },
+    "free1_pay_0_positive_delay_log": {
+      "expression": "np.log1p(np.maximum(pd.to_numeric(df['pay_0'], errors='coerce'), 0.0))",
+      "family": "unary_monotone_log",
+      "description": "Captures recent delinquency severity while collapsing non-delinquent and prepaid statuses near zero.",
+      "executor": "pointwise"
+    },
+    "free1_pay_2_positive_delay_log": {
+      "expression": "np.log1p(np.maximum(pd.to_numeric(df['pay_2'], errors='coerce'), 0.0))",
+      "family": "unary_monotone_log",
+      "description": "Captures prior-month delinquency severity as persistent repayment trouble beyond the most recent statement.",
+      "executor": "pointwise"
+    },
+    "free1_pay_3_positive_delay_log": {
+      "expression": "np.log1p(np.maximum(pd.to_numeric(df['pay_3'], errors='coerce'), 0.0))",
+      "family": "unary_monotone_log",
+      "description": "Captures medium-term delinquency severity, adding signal for customers whose repayment stress predates the latest cycles.",
+      "executor": "pointwise"
+    },
+    "free1_pay_0_oof_te_logit": {
+      "expression": "np.log((np.minimum(np.maximum(pd.to_numeric(df['pay_0_oof_te'], errors='coerce'), 1e-6), 1.0 - 1e-6)) / (1.0 - np.minimum(np.maximum(pd.to_numeric(df['pay_0_oof_te'], errors='coerce'), 1e-6), 1.0 - 1e-6)))",
+      "family": "unary_bounded_rescaling",
+      "description": "Captures the monotone risk information in the out-of-fold encoding on a log-odds scale while guarding boundary values.",
+      "executor": "pointwise"
+    },
+    "free2_bill_amt1_limit_util": {
+      "expression": "pd.to_numeric(df['bill_amt1'], errors='coerce') / (pd.to_numeric(df['limit_bal'], errors='coerce') + 1.0)",
+      "family": "guarded_ratio",
+      "description": "Captures current credit utilization pressure by comparing the latest statement balance with the customer's credit limit.",
+      "executor": "pointwise"
+    },
+    "free2_bill_amt1_over_bill_amt2_growth": {
+      "expression": "(pd.to_numeric(df['bill_amt1'], errors='coerce') - pd.to_numeric(df['bill_amt2'], errors='coerce')) / (np.abs(pd.to_numeric(df['bill_amt2'], errors='coerce')) + 1.0)",
+      "family": "guarded_ratio",
+      "description": "Captures short-term balance growth or runoff between the two most recent statements, a mechanism for worsening or improving debt load.",
+      "executor": "pointwise"
+    },
+    "free2_pay_amt1_bill_amt2_coverage": {
+      "expression": "pd.to_numeric(df['pay_amt1'], errors='coerce') / (np.maximum(pd.to_numeric(df['bill_amt2'], errors='coerce'), 0.0) + 1.0)",
+      "family": "guarded_ratio",
+      "description": "Captures how much of the previous statement was covered by the most recent payment, reflecting repayment capacity.",
+      "executor": "pointwise"
+    },
+    "free2_pay_amt2_bill_amt3_coverage": {
+      "expression": "pd.to_numeric(df['pay_amt2'], errors='coerce') / (np.maximum(pd.to_numeric(df['bill_amt3'], errors='coerce'), 0.0) + 1.0)",
+      "family": "guarded_ratio",
+      "description": "Captures prior-cycle repayment coverage to distinguish consistent paydown behavior from one-off recent payments.",
+      "executor": "pointwise"
+    },
+    "free2_pay_0_pay_2_deterioration": {
+      "expression": "pd.to_numeric(df['pay_0'], errors='coerce') - pd.to_numeric(df['pay_2'], errors='coerce')",
+      "family": "difference",
+      "description": "Captures whether repayment status worsened or improved from the prior month to the latest month.",
+      "executor": "pointwise"
+    },
+    "free2_pay_0_pay_2_positive_delay_product": {
+      "expression": "np.maximum(pd.to_numeric(df['pay_0'], errors='coerce'), 0.0) * np.maximum(pd.to_numeric(df['pay_2'], errors='coerce'), 0.0)",
+      "family": "bounded_product",
+      "description": "Captures persistent recent delinquency by emphasizing cases where both latest repayment-status fields indicate delay.",
+      "executor": "pointwise"
+    },
+    "free2_pay_amt1_pay_amt2_log_change": {
+      "expression": "pd.to_numeric(df['pay_amt1_log'], errors='coerce') - pd.to_numeric(df['pay_amt2_log'], errors='coerce')",
+      "family": "difference",
+      "description": "Captures recent payment acceleration or slowdown using already guarded log-payment magnitudes.",
+      "executor": "pointwise"
+    },
+    "free2_pay0_te_age_te_product": {
+      "expression": "pd.to_numeric(df['pay_0_oof_te'], errors='coerce') * pd.to_numeric(df['age_oof_te'], errors='coerce')",
+      "family": "bounded_product",
+      "description": "Captures interaction between repayment-status risk and age-profile risk as a combined propensity signal.",
+      "executor": "pointwise"
+    },
+    "free3_bill1_limit_after_pay1_util": {
+      "expression": "df['bill_amt1'] / (df['limit_bal'] + df['pay_amt1'] + 1.0)",
+      "family": "ternary_ratio_denominator_combo",
+      "description": "Captures current statement burden relative to combined credit capacity and most recent cash repayment, separating high balances that persist despite payment activity.",
+      "executor": "pointwise"
+    },
+    "free3_pay1_bill2_vs_bill2_bill3_gap": {
+      "expression": "(df['pay_amt1'] / (np.abs(df['bill_amt2']) + 1.0)) - (df['bill_amt2'] / (np.abs(df['bill_amt3']) + 1.0))",
+      "family": "ternary_difference_of_ratios",
+      "description": "Captures whether recent repayment coverage of the prior bill is outpacing the prior bill's size relative to the older bill, a short-term deleveraging signal.",
+      "executor": "pointwise"
+    },
+    "free3_pay0_age_limit_norm": {
+      "expression": "df['pay_0'] / ((np.sqrt(np.maximum(df['age'], 0.0)) + 1.0) * (np.log1p(np.maximum(df['limit_bal'], 0.0)) + 1.0))",
+      "family": "ternary_two_way_normalization",
+      "description": "Captures recent delinquency severity scaled by both borrower age and credit line size, distinguishing the same delay across different capacity profiles.",
+      "executor": "pointwise"
+    },
+    "free3_bill1_minus_pay1_limit_share": {
+      "expression": "(df['bill_amt1'] - df['pay_amt1']) / (df['limit_bal'] + 1.0)",
+      "family": "ternary_three_field_consistency",
+      "description": "Captures residual current balance after the latest payment as a share of credit limit, measuring whether payments materially reduce utilization pressure.",
+      "executor": "pointwise"
+    },
+    "free3_pay0_pay2_oofte_alignment": {
+      "expression": "(df['pay_0'] - df['pay_2']) * (df['pay_0_oof_te'] - df['pay_2_oof_te'])",
+      "family": "ternary_three_field_consistency",
+      "description": "Captures whether observed recent repayment deterioration agrees with the learned marginal risk levels for the current and prior repayment statuses.",
+      "executor": "pointwise"
+    },
+    "free3_bill2_pay2_limit_stress": {
+      "expression": "df['bill_amt2'] / (df['limit_bal'] / (np.maximum(df['pay_2'], 0.0) + 1.0) + 1.0)",
+      "family": "ternary_ratio_denominator_combo",
+      "description": "Captures prior statement utilization amplified when repayment status shows delay, combining debt load and delinquency pressure.",
+      "executor": "pointwise"
+    },
+    "free3_pay_amt1_log_vs_pay0_te_freq": {
+      "expression": "df['pay_amt1_log'] / ((df['pay_0_oof_te'] + 1.0) * (df['pay_0_freq'] + 1.0))",
+      "family": "ternary_two_way_normalization",
+      "description": "Captures payment size normalized by the interaction of encoded repayment-status risk and its prevalence, highlighting unusual payment behavior for a risk bucket.",
+      "executor": "pointwise"
+    },
+    "free3_bill1_bill2_pay1_reversal": {
+      "expression": "(df['bill_amt1'] / (np.abs(df['bill_amt2']) + 1.0)) - (df['pay_amt1'] / (np.abs(df['bill_amt2']) + 1.0))",
+      "family": "ternary_difference_of_ratios",
+      "description": "Captures whether the newest bill moved against the latest payment, flagging balance growth that repayment failed to offset.",
+      "executor": "pointwise"
+    },
+    "free4_pay_delay_positive_hhi": {
+      "expression": "((np.maximum(pd.to_numeric(df['pay_0']), 0.0) / (np.maximum(pd.to_numeric(df['pay_0']), 0.0) + np.maximum(pd.to_numeric(df['pay_2']), 0.0) + np.maximum(pd.to_numeric(df['pay_3']), 0.0) + np.maximum(pd.to_numeric(df['pay_4']), 0.0) + np.maximum(pd.to_numeric(df['pay_5']), 0.0) + np.maximum(pd.to_numeric(df['pay_6']), 0.0) + 1.0)) ** 2 + (np.maximum(pd.to_numeric(df['pay_2']), 0.0) / (np.maximum(pd.to_numeric(df['pay_0']), 0.0) + np.maximum(pd.to_numeric(df['pay_2']), 0.0) + np.maximum(pd.to_numeric(df['pay_3']), 0.0) + np.maximum(pd.to_numeric(df['pay_4']), 0.0) + np.maximum(pd.to_numeric(df['pay_5']), 0.0) + np.maximum(pd.to_numeric(df['pay_6']), 0.0) + 1.0)) ** 2 + (np.maximum(pd.to_numeric(df['pay_3']), 0.0) / (np.maximum(pd.to_numeric(df['pay_0']), 0.0) + np.maximum(pd.to_numeric(df['pay_2']), 0.0) + np.maximum(pd.to_numeric(df['pay_3']), 0.0) + np.maximum(pd.to_numeric(df['pay_4']), 0.0) + np.maximum(pd.to_numeric(df['pay_5']), 0.0) + np.maximum(pd.to_numeric(df['pay_6']), 0.0) + 1.0)) ** 2 + (np.maximum(pd.to_numeric(df['pay_4']), 0.0) / (np.maximum(pd.to_numeric(df['pay_0']), 0.0) + np.maximum(pd.to_numeric(df['pay_2']), 0.0) + np.maximum(pd.to_numeric(df['pay_3']), 0.0) + np.maximum(pd.to_numeric(df['pay_4']), 0.0) + np.maximum(pd.to_numeric(df['pay_5']), 0.0) + np.maximum(pd.to_numeric(df['pay_6']), 0.0) + 1.0)) ** 2 + (np.maximum(pd.to_numeric(df['pay_5']), 0.0) / (np.maximum(pd.to_numeric(df['pay_0']), 0.0) + np.maximum(pd.to_numeric(df['pay_2']), 0.0) + np.maximum(pd.to_numeric(df['pay_3']), 0.0) + np.maximum(pd.to_numeric(df['pay_4']), 0.0) + np.maximum(pd.to_numeric(df['pay_5']), 0.0) + np.maximum(pd.to_numeric(df['pay_6']), 0.0) + 1.0)) ** 2 + (np.maximum(pd.to_numeric(df['pay_6']), 0.0) / (np.maximum(pd.to_numeric(df['pay_0']), 0.0) + np.maximum(pd.to_numeric(df['pay_2']), 0.0) + np.maximum(pd.to_numeric(df['pay_3']), 0.0) + np.maximum(pd.to_numeric(df['pay_4']), 0.0) + np.maximum(pd.to_numeric(df['pay_5']), 0.0) + np.maximum(pd.to_numeric(df['pay_6']), 0.0) + 1.0)) ** 2)",
+      "family": "row_series_shape",
+      "description": "HHI concentration over the six repayment-status months captures whether delinquency risk is dominated by one severe recent delay or spread across the repayment history.",
+      "executor": "pointwise"
+    },
+    "free4_bill_amount_share_entropy": {
+      "expression": "(-(((np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + 1.0) / (np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 6.0)) * np.log((np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + 1.0) / (np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 6.0)) + ((np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + 1.0) / (np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 6.0)) * np.log((np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + 1.0) / (np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 6.0)) + ((np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + 1.0) / (np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 6.0)) * np.log((np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + 1.0) / (np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 6.0)) + ((np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + 1.0) / (np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 6.0)) * np.log((np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + 1.0) / (np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 6.0)) + ((np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + 1.0) / (np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 6.0)) * np.log((np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + 1.0) / (np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 6.0)) + ((np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 1.0) / (np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 6.0)) * np.log((np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 1.0) / (np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt3']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt4']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt5']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt6']), 0.0) + 6.0))))",
+      "family": "row_series_shape",
+      "description": "Entropy of positive bill-balance shares captures whether outstanding debt is persistently distributed across months versus concentrated in a narrow billing window.",
+      "executor": "pointwise"
+    },
+    "free4_pay_amount_log_cv": {
+      "expression": "(np.sqrt(((pd.to_numeric(df['pay_amt1_log']) - ((pd.to_numeric(df['pay_amt1_log']) + pd.to_numeric(df['pay_amt2_log']) + pd.to_numeric(df['pay_amt3_log']) + pd.to_numeric(df['pay_amt4_log']) + pd.to_numeric(df['pay_amt5_log']) + pd.to_numeric(df['pay_amt6_log'])) / 6.0)) ** 2 + (pd.to_numeric(df['pay_amt2_log']) - ((pd.to_numeric(df['pay_amt1_log']) + pd.to_numeric(df['pay_amt2_log']) + pd.to_numeric(df['pay_amt3_log']) + pd.to_numeric(df['pay_amt4_log']) + pd.to_numeric(df['pay_amt5_log']) + pd.to_numeric(df['pay_amt6_log'])) / 6.0)) ** 2 + (pd.to_numeric(df['pay_amt3_log']) - ((pd.to_numeric(df['pay_amt1_log']) + pd.to_numeric(df['pay_amt2_log']) + pd.to_numeric(df['pay_amt3_log']) + pd.to_numeric(df['pay_amt4_log']) + pd.to_numeric(df['pay_amt5_log']) + pd.to_numeric(df['pay_amt6_log'])) / 6.0)) ** 2 + (pd.to_numeric(df['pay_amt4_log']) - ((pd.to_numeric(df['pay_amt1_log']) + pd.to_numeric(df['pay_amt2_log']) + pd.to_numeric(df['pay_amt3_log']) + pd.to_numeric(df['pay_amt4_log']) + pd.to_numeric(df['pay_amt5_log']) + pd.to_numeric(df['pay_amt6_log'])) / 6.0)) ** 2 + (pd.to_numeric(df['pay_amt5_log']) - ((pd.to_numeric(df['pay_amt1_log']) + pd.to_numeric(df['pay_amt2_log']) + pd.to_numeric(df['pay_amt3_log']) + pd.to_numeric(df['pay_amt4_log']) + pd.to_numeric(df['pay_amt5_log']) + pd.to_numeric(df['pay_amt6_log'])) / 6.0)) ** 2 + (pd.to_numeric(df['pay_amt6_log']) - ((pd.to_numeric(df['pay_amt1_log']) + pd.to_numeric(df['pay_amt2_log']) + pd.to_numeric(df['pay_amt3_log']) + pd.to_numeric(df['pay_amt4_log']) + pd.to_numeric(df['pay_amt5_log']) + pd.to_numeric(df['pay_amt6_log'])) / 6.0)) ** 2) / 6.0) / (np.abs((pd.to_numeric(df['pay_amt1_log']) + pd.to_numeric(df['pay_amt2_log']) + pd.to_numeric(df['pay_amt3_log']) + pd.to_numeric(df['pay_amt4_log']) + pd.to_numeric(df['pay_amt5_log']) + pd.to_numeric(df['pay_amt6_log'])) / 6.0) + 1.0))",
+      "family": "row_series_shape",
+      "description": "Coefficient of variation over logged payment amounts captures irregular repayment behavior and payment volatility across the six observed months.",
+      "executor": "pointwise"
+    },
+    "free4_bill_amount_recent_trend_slope": {
+      "expression": "((5.0 * pd.to_numeric(df['bill_amt1']) + 3.0 * pd.to_numeric(df['bill_amt2']) + 1.0 * pd.to_numeric(df['bill_amt3']) - 1.0 * pd.to_numeric(df['bill_amt4']) - 3.0 * pd.to_numeric(df['bill_amt5']) - 5.0 * pd.to_numeric(df['bill_amt6'])) / ((5.0 * 5.0 + 3.0 * 3.0 + 1.0 * 1.0 + 1.0 * 1.0 + 3.0 * 3.0 + 5.0 * 5.0) + 1.0))",
+      "family": "row_series_shape",
+      "description": "A symmetric-weight linear slope over bill balances ordered most-recent first captures accelerating debt accumulation or deleveraging through time.",
+      "executor": "pointwise"
+    },
+    "free4_payment_amount_recent_momentum": {
+      "expression": "((pd.to_numeric(df['pay_amt1']) + pd.to_numeric(df['pay_amt2']) + pd.to_numeric(df['pay_amt3']) - pd.to_numeric(df['pay_amt4']) - pd.to_numeric(df['pay_amt5']) - pd.to_numeric(df['pay_amt6'])) / (np.abs(pd.to_numeric(df['pay_amt1'])) + np.abs(pd.to_numeric(df['pay_amt2'])) + np.abs(pd.to_numeric(df['pay_amt3'])) + np.abs(pd.to_numeric(df['pay_amt4'])) + np.abs(pd.to_numeric(df['pay_amt5'])) + np.abs(pd.to_numeric(df['pay_amt6'])) + 1.0))",
+      "family": "row_series_shape",
+      "description": "Recent-versus-older payment momentum captures whether repayment intensity is improving or fading in the latest billing cycles.",
+      "executor": "pointwise"
+    },
+    "free4_recent_bill_peer_normalized_magnitude": {
+      "expression": "((np.maximum(pd.to_numeric(df['bill_amt1']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt2']), 0.0) + np.maximum(pd.to_numeric(df['bill_amt3']), 0.0)) / (3.0 * (np.maximum(pd.to_numeric(df['limit_bal']), 0.0) + 1.0)))",
+      "family": "row_series_shape",
+      "description": "Recent bill magnitude normalized by the account credit limit captures utilization pressure in the bill sequence relative to the borrower's approved capacity.",
+      "executor": "pointwise"
+    },
+    "free5_pay_delay_tail_burden": {
+      "expression": "(np.maximum(df['pay_2'], 0.0) + np.maximum(df['pay_3'], 0.0) + np.maximum(df['pay_4'], 0.0) + np.maximum(df['pay_5'], 0.0) + np.maximum(df['pay_6'], 0.0)) / 5.0",
+      "family": "whole_group_shape",
+      "description": "Captures persistent repayment stress in the older five-month repayment-status tail without restating the dominant current-status splits.",
+      "executor": "pointwise"
+    },
+    "free5_bill_tail_signed_cv": {
+      "expression": "np.sqrt(np.maximum(((df['bill_amt2']**2 + df['bill_amt3']**2 + df['bill_amt4']**2 + df['bill_amt5']**2 + df['bill_amt6']**2) / 5.0) - (((df['bill_amt2'] + df['bill_amt3'] + df['bill_amt4'] + df['bill_amt5'] + df['bill_amt6']) / 5.0)**2), 0.0)) / ((np.abs(df['bill_amt2']) + np.abs(df['bill_amt3']) + np.abs(df['bill_amt4']) + np.abs(df['bill_amt5']) + np.abs(df['bill_amt6'])) / 5.0 + 1.0)",
+      "family": "whole_group_volatility",
+      "description": "Captures volatility in the older statement-balance profile, including negative-balance reversals, scaled by average absolute exposure.",
+      "executor": "pointwise"
+    },
+    "free5_bill_tail_convexity_ratio": {
+      "expression": "((df['bill_amt2'] - 2.0 * df['bill_amt3'] + df['bill_amt4']) + (df['bill_amt4'] - 2.0 * df['bill_amt5'] + df['bill_amt6'])) / (np.abs(df['bill_amt2']) + np.abs(df['bill_amt3']) + np.abs(df['bill_amt4']) + np.abs(df['bill_amt5']) + np.abs(df['bill_amt6']) + 1.0)",
+      "family": "whole_group_shape",
+      "description": "Captures curvature in the older bill trajectory, separating U-shaped or hump-shaped exposure paths from simple level effects.",
+      "executor": "pointwise"
+    },
+    "free5_payment_late_tail_share": {
+      "expression": "(df['pay_amt4'] + df['pay_amt5'] + df['pay_amt6']) / (df['pay_amt1'] + df['pay_amt2'] + df['pay_amt3'] + df['pay_amt4'] + df['pay_amt5'] + df['pay_amt6'] + 1.0)",
+      "family": "payment_concentration",
+      "description": "Captures reliance on later historical payments relative to the full six-payment profile, a concentration mechanism rather than a single payment amount.",
+      "executor": "pointwise"
+    },
+    "free5_statement_payment_balance_gap": {
+      "expression": "((df['bill_amt2'] + df['bill_amt3'] + df['bill_amt4'] + df['bill_amt5'] + df['bill_amt6']) - (df['pay_amt2'] + df['pay_amt3'] + df['pay_amt4'] + df['pay_amt5'] + df['pay_amt6'])) / (df['limit_bal'] + 1.0)",
+      "family": "cross_field_consistency",
+      "description": "Captures mismatch between cumulative statement obligations and cumulative repayments over the tail history, scaled by credit capacity.",
+      "executor": "pointwise"
+    },
+    "free5_demographic_status_risk_blend": {
+      "expression": "((df['age'] - 34.0) / 55.0) * ((df['education'] - 2.0) / 6.0) + ((df['marriage'] - 2.0) / 3.0) * ((df['sex'] - 1.5) / 0.5) + (np.maximum(df['pay_3'], 0.0) + np.maximum(df['pay_4'], 0.0) + np.maximum(df['pay_5'], 0.0) + np.maximum(df['pay_6'], 0.0)) / 24.0",
+      "family": "low_gain_interaction",
+      "description": "Captures a low-gain demographic consistency pattern by blending age, education, marriage, and sex with non-current historical delinquency burden.",
+      "executor": "pointwise"
+    }
+  }
+}

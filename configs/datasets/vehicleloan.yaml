@@ -1,0 +1,10 @@
+# Kaggle "L&T Vehicle Loan Default Prediction" (mamtadhaker/...). Put train.csv in data/vehicleloan/.
+dataset: vehicleloan
+loader: vehicleloan             # forge.datasets.prepare_vehicleloan
+data_files: [vehicleloan/train.csv]
+label: loan_default
+# Identifier, date and free-text columns excluded in the experiments.
+drop: [uniqueid, date_of_birth, average_acct_age, credit_history_length, employment_type,
+       perform_cns_score_description]
+time_col: disbursal_date        # chronological split by disbursal date
+entity_cols: [branch_id, supplier_id, current_pincode_id]

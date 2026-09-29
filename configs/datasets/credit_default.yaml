@@ -1,0 +1,8 @@
+# UCI "Default of Credit Card Clients" (Yeh and Lien, 2009). Downloaded automatically.
+# Paper: Table 1; no event time -> stratified split.
+dataset: credit_default
+loader: credit_default          # forge.datasets.load_credit_default
+label: default.payment.next.month
+drop: [id]
+time_col: null
+entity_cols: []

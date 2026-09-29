@@ -1,0 +1,9 @@
+# Kaggle "Twitter Bots Accounts" (davidmartngutirrez/twitter-bots-accounts).
+# Put twitter_human_bots_dataset.csv in data/twitterbot/. is_bot = (account_type == "bot").
+dataset: twitterbot
+loader: twitterbot              # forge.datasets.prepare_twitterbot
+data_files: [twitterbot/twitter_human_bots_dataset.csv]
+label: is_bot
+drop: [id, location]
+time_col: null                  # no reliable event time -> stratified split
+entity_cols: []

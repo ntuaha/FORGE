@@ -1,0 +1,9 @@
+# Kaggle "Credit Card Transactions Fraud Detection Dataset" (kartik2112/fraud-detection).
+# Put fraudTrain.csv and fraudTest.csv in data/sparknov/; both files are used (1,852,394 rows).
+dataset: sparknov
+loader: sparknov                # forge.datasets.prepare_sparknov
+data_files: [sparknov/fraudTrain.csv, sparknov/fraudTest.csv]
+label: is_fraud
+drop: []
+time_col: unix_time
+entity_cols: [cc_num, merchant] # card, merchant

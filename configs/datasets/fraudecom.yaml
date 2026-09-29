@@ -1,0 +1,9 @@
+# Kaggle "Fraud ecommerce" (vbinh002/fraud-ecommerce). Put Fraud_Data.csv in data/fraudecom/.
+# Table 1 of the paper: 11 columns: signup/purchase times become epoch seconds.
+dataset: fraudecom
+loader: fraudecom               # forge.datasets.prepare_fraudecom
+data_files: [fraudecom/Fraud_Data.csv]
+label: class
+drop: [user_id]
+time_col: purchase_ts           # chronological split by purchase time
+entity_cols: [device_id, ip_address]   # Table 1: device, IP

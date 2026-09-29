@@ -1,0 +1,22 @@
+# Environments
+.venv/
+venv/
+.env
+.env.*
+
+# Python caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Downloaded data, run outputs and LLM response cache
+data/
+outputs/
+.cache/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Local result tables (not part of this repository)
+paper_results/

@@ -1,0 +1,18 @@
+# Example of your own settings. Run:
+#   python main.py --config configs/example_experiment.yaml
+#
+# Only the keys you list change; everything else comes from configs/default.yaml
+# (which names the paper section of every value) and configs/datasets/<dataset>.yaml.
+# Nested settings (e.g. xgboost:) change only the keys given.
+
+dataset: credit_default         # a file in configs/datasets/
+learner: xgboost                # lightgbm | xgboost | catboost | module:function
+seed: 13
+
+xgboost:
+  n_estimators: 600             # paper: 400
+  max_depth: 5                  # paper: 6
+
+psi_max: 0.20                   # stability screen, Eq. (8); paper: 0.25
+gate_harm_k: 1.5                # harm-only gate, Eq. (14); paper: 2.0
+expert_min_half_positives: 50   # S2 is disabled below this; paper: 100

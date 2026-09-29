@@ -1,0 +1,8 @@
+# Kaggle "Credit Card Fraud Detection" (mlg-ulb/creditcardfraud). Put creditcard.csv in data/creditcard/.
+dataset: creditcard
+loader: creditcard              # forge.datasets.prepare_creditcard
+data_files: [creditcard/creditcard.csv]
+label: class
+drop: []
+time_col: time
+entity_cols: []

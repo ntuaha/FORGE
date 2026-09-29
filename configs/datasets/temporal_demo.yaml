@@ -1,0 +1,11 @@
+# Synthetic, time-ordered teaching data (not a paper benchmark). It has an event
+# time and an entity column, so the routing rule runs the CoF rounds.
+dataset: temporal_demo
+loader: temporal_demo           # forge.datasets.make_temporal_demo
+label: target
+drop: []
+time_col: event_time
+entity_cols: [customer]
+lightgbm: {n_estimators: 80, num_leaves: 15}
+xgboost: {n_estimators: 80, max_depth: 4}
+catboost: {iterations: 80, depth: 4}

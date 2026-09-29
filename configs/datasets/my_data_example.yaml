@@ -1,0 +1,11 @@
+# Template for your own data: copy, edit, and run
+#   python main.py --config configs/datasets/my_data_example.yaml
+dataset: my_data
+loader: csv                     # one or more CSV files, concatenated
+data_files: [my_data.csv]       # relative to data/ (or absolute paths)
+label: is_fraud                 # 0/1 column
+drop: [transaction_id]          # identifiers and free text
+time_col: event_time            # numeric or dates; null for a stratified split
+entity_cols: [card_id]          # columns for entity-history features (may be empty)
+llm_mode: command               # see configs/default.yaml
+llm_command: "codex exec --skip-git-repo-check --output-schema {schema} -o {output} -"

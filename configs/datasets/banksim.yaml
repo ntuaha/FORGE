@@ -1,0 +1,8 @@
+# Kaggle "BankSim" (ealaxi/banksim1). Put bs140513_032310.csv in data/banksim/.
+dataset: banksim
+loader: banksim                 # forge.datasets.prepare_banksim
+data_files: [banksim/bs140513_032310.csv]
+label: fraud
+drop: [zipcodeori, zipmerchant] # constant zip codes
+time_col: step
+entity_cols: [customer, merchant]
