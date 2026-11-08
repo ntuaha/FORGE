@@ -1,0 +1,15 @@
+{"dataset": "creditcard", "arm": "control_s11", "learner": "lgbm", "seed": 11, "fit": "single", "ap": 0.46066421353401316, "n_specs": 6, "n_applied": 6, "skipped": [], "n_cols": 35, "sec": 3.2}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "lgbm", "seed": 12, "fit": "single", "ap": 0.4161137134601175, "n_specs": 6, "n_applied": 6, "skipped": [], "n_cols": 35, "sec": 5.1}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "lgbm", "seed": 13, "fit": "single", "ap": 0.8057710483656361, "n_specs": 6, "n_applied": 6, "skipped": [], "n_cols": 35, "sec": 4.2}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "xgb", "seed": 11, "fit": "single", "ap": 0.7999804915099122, "n_specs": 20, "n_applied": 20, "skipped": [], "n_cols": 49, "sec": 6.0}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "xgb", "seed": 12, "fit": "single", "ap": 0.7999804915099122, "n_specs": 20, "n_applied": 20, "skipped": [], "n_cols": 49, "sec": 7.4}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "xgb", "seed": 13, "fit": "single", "ap": 0.7999804915099122, "n_specs": 20, "n_applied": 20, "skipped": [], "n_cols": 49, "sec": 6.2}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "cat", "seed": 11, "fit": "single", "ap": 0.8017731466507211, "n_specs": 28, "n_applied": 28, "skipped": [], "n_cols": 57, "sec": 6.3}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "cat", "seed": 12, "fit": "single", "ap": 0.8006680890507833, "n_specs": 28, "n_applied": 28, "skipped": [], "n_cols": 57, "sec": 7.0}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "cat", "seed": 13, "fit": "single", "ap": 0.7981789164413046, "n_specs": 28, "n_applied": 28, "skipped": [], "n_cols": 57, "sec": 6.7}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "lgbm", "seed": 14, "fit": "single", "ap": 0.5718107718770853, "n_specs": 6, "n_applied": 6, "skipped": [], "n_cols": 35, "sec": 2.4}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "lgbm", "seed": 15, "fit": "single", "ap": 0.5478171010834504, "n_specs": 6, "n_applied": 6, "skipped": [], "n_cols": 35, "sec": 3.4}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "xgb", "seed": 14, "fit": "single", "ap": 0.7999804915099122, "n_specs": 20, "n_applied": 20, "skipped": [], "n_cols": 49, "sec": 9.1}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "xgb", "seed": 15, "fit": "single", "ap": 0.7999804915099122, "n_specs": 20, "n_applied": 20, "skipped": [], "n_cols": 49, "sec": 10.8}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "cat", "seed": 14, "fit": "single", "ap": 0.7920383929477866, "n_specs": 28, "n_applied": 28, "skipped": [], "n_cols": 57, "sec": 9.0}
+{"dataset": "creditcard", "arm": "control_s11", "learner": "cat", "seed": 15, "fit": "single", "ap": 0.7933688040078213, "n_specs": 28, "n_applied": 28, "skipped": [], "n_cols": 57, "sec": 8.2}

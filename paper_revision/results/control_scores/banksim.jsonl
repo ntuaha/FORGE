@@ -1,0 +1,15 @@
+{"dataset": "banksim", "arm": "control_s11", "learner": "lgbm", "seed": 11, "fit": "single", "ap": 0.9452133726998293, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 42, "sec": 3.3}
+{"dataset": "banksim", "arm": "control_s11", "learner": "lgbm", "seed": 12, "fit": "single", "ap": 0.9455773330305886, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 42, "sec": 3.2}
+{"dataset": "banksim", "arm": "control_s11", "learner": "lgbm", "seed": 13, "fit": "single", "ap": 0.9431834508437139, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 42, "sec": 3.5}
+{"dataset": "banksim", "arm": "control_s11", "learner": "xgb", "seed": 11, "fit": "single", "ap": 0.9458387346321657, "n_specs": 34, "n_applied": 34, "skipped": [], "n_cols": 40, "sec": 5.4}
+{"dataset": "banksim", "arm": "control_s11", "learner": "xgb", "seed": 12, "fit": "single", "ap": 0.9458387346321657, "n_specs": 34, "n_applied": 34, "skipped": [], "n_cols": 40, "sec": 4.7}
+{"dataset": "banksim", "arm": "control_s11", "learner": "xgb", "seed": 13, "fit": "single", "ap": 0.9458387346321657, "n_specs": 34, "n_applied": 34, "skipped": [], "n_cols": 40, "sec": 5.5}
+{"dataset": "banksim", "arm": "control_s11", "learner": "cat", "seed": 11, "fit": "single", "ap": 0.9499394329936968, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 36, "sec": 6.7}
+{"dataset": "banksim", "arm": "control_s11", "learner": "cat", "seed": 12, "fit": "single", "ap": 0.9486138035127322, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 36, "sec": 6.5}
+{"dataset": "banksim", "arm": "control_s11", "learner": "cat", "seed": 13, "fit": "single", "ap": 0.9501728582505102, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 36, "sec": 7.7}
+{"dataset": "banksim", "arm": "control_s11", "learner": "lgbm", "seed": 14, "fit": "single", "ap": 0.9449065942433448, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 42, "sec": 3.1}
+{"dataset": "banksim", "arm": "control_s11", "learner": "lgbm", "seed": 15, "fit": "single", "ap": 0.9449437525511308, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 42, "sec": 2.9}
+{"dataset": "banksim", "arm": "control_s11", "learner": "xgb", "seed": 14, "fit": "single", "ap": 0.9458387346321657, "n_specs": 34, "n_applied": 34, "skipped": [], "n_cols": 40, "sec": 3.8}
+{"dataset": "banksim", "arm": "control_s11", "learner": "xgb", "seed": 15, "fit": "single", "ap": 0.9458387346321657, "n_specs": 34, "n_applied": 34, "skipped": [], "n_cols": 40, "sec": 3.1}
+{"dataset": "banksim", "arm": "control_s11", "learner": "cat", "seed": 14, "fit": "single", "ap": 0.9497304337588648, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 36, "sec": 10.2}
+{"dataset": "banksim", "arm": "control_s11", "learner": "cat", "seed": 15, "fit": "single", "ap": 0.9496340883902347, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 36, "sec": 8.5}

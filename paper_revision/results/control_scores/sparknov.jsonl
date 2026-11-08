@@ -1,0 +1,15 @@
+{"dataset": "sparknov", "arm": "control_s11", "learner": "lgbm", "seed": 11, "fit": "single", "ap": 0.4508319921616857, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 46, "sec": 30.7}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "lgbm", "seed": 12, "fit": "single", "ap": 0.3186984011281981, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 46, "sec": 19.6}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "lgbm", "seed": 13, "fit": "single", "ap": 0.2694535431469194, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 46, "sec": 16.1}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "xgb", "seed": 11, "fit": "single", "ap": 0.529621779262399, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 45, "sec": 26.1}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "xgb", "seed": 12, "fit": "single", "ap": 0.529621779262399, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 45, "sec": 36.6}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "xgb", "seed": 13, "fit": "single", "ap": 0.529621779262399, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 45, "sec": 30.8}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "cat", "seed": 11, "fit": "single", "ap": 0.5933260734497322, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 46, "sec": 33.5}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "cat", "seed": 12, "fit": "single", "ap": 0.5735497626336777, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 46, "sec": 27.1}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "cat", "seed": 13, "fit": "single", "ap": 0.582392065249952, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 46, "sec": 31.5}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "lgbm", "seed": 14, "fit": "single", "ap": 0.329660768441148, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 46, "sec": 14.8}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "lgbm", "seed": 15, "fit": "single", "ap": 0.44091695235134976, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 46, "sec": 18.8}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "xgb", "seed": 14, "fit": "single", "ap": 0.529621779262399, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 45, "sec": 21.0}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "xgb", "seed": 15, "fit": "single", "ap": 0.529621779262399, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 45, "sec": 16.5}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "cat", "seed": 14, "fit": "single", "ap": 0.581723615601319, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 46, "sec": 25.0}
+{"dataset": "sparknov", "arm": "control_s11", "learner": "cat", "seed": 15, "fit": "single", "ap": 0.5963143208488274, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 46, "sec": 33.1}

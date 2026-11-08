@@ -1,0 +1,94 @@
+version: forge-v18-unified-20260730
+
+engine:
+  seed: 20260717
+  bag_folds: 8
+  graph:
+    l1_seats: null
+    l2_seats: null
+  member_time_limit_sec: 21600
+  blend_steps: 100
+  mlp:
+    backend: pytorch_cuda
+    device: cuda:0
+    batch_size: 4096
+    predict_batch_size: 32768
+    epochs: 60
+    clip: 10.0
+
+selection:
+  entry:
+    alpha: 0.05
+    k_cap: 12
+    residualize_folds: 5
+    ridge_alpha: 1.0
+    discovery_row_cap: 200000
+  bh_audit:
+    alpha: 0.05
+  exit:
+    rule: oof_permutation_importance_discovery
+    tau_drop: 0.0
+    d_max_per_model_per_round: 2
+  blacklist: permanent_per_model
+
+llm:
+  enabled: true
+  model: gpt-5.5
+  timeout_sec: 600
+  attempts: 2
+  max_calls: 840
+  max_pointwise_per_model_per_round: 4
+  max_aggregate_per_model_per_round: 2
+  same_entry_rule_as_bank: true
+  count_into_bh_p: true
+
+experiment:
+  max_rounds: 4
+  gate_block_weights: [2, 1, 1, 1]
+  stop_on_first_reject: true
+  retain_last_incumbent: true
+  gate:
+    bootstrap_repeats: 1000
+    alpha_total: 0.05
+    rule: harm_only_2se
+    harm_k: 2.0
+    tau_auprc: 0.0
+    se_multiplier: 0.0
+    min_positive_fold_fraction: 0.60
+
+representation:
+  enabled: true
+  probe_row_cap: 500000
+  probe_head_fraction: 0.8
+  tie_margin_auprc: 0.0005
+
+schema:
+  entity_min_repeat_fraction: 0.02
+  entity_min_unique: 20
+  entity_top_k: 3
+
+encoding:
+  target_smooth: 20.0
+
+dystack:
+  enabled: true
+  protocol: chronological_tail_holdout
+  holdout_frac: 0.1111111111111111
+  random_state: 42
+  rule: complexity_gate_1se
+  k: 1.0
+  bootstrap_repeats: 1000
+  bootstrap_seed: 20260802
+
+references:
+  fraudecom:
+    ag_raw: 0.1383155
+    forge_ag_pooled: 0.1411493
+    forge_v9: 0.1436938
+  vehicleloan:
+    ag_raw: 0.3889406
+    forge_ag: 0.39033
+  sparknov:
+    ag_raw: 0.7410683
+    forge_ag_mean: 0.83585
+    forge_ag_pooled: 0.82912

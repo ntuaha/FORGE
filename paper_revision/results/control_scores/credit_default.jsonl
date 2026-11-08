@@ -1,0 +1,15 @@
+{"dataset": "credit_default", "arm": "control_s11", "learner": "lgbm", "seed": 11, "fit": "single", "ap": 0.5514776017870188, "n_specs": 34, "n_applied": 34, "skipped": [], "n_cols": 57, "sec": 0.8}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "lgbm", "seed": 12, "fit": "single", "ap": 0.5513777861919316, "n_specs": 34, "n_applied": 34, "skipped": [], "n_cols": 57, "sec": 0.8}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "lgbm", "seed": 13, "fit": "single", "ap": 0.5475195419149895, "n_specs": 34, "n_applied": 34, "skipped": [], "n_cols": 57, "sec": 0.8}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "xgb", "seed": 11, "fit": "single", "ap": 0.5471973653874246, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 54, "sec": 0.8}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "xgb", "seed": 12, "fit": "single", "ap": 0.5471973653874246, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 54, "sec": 0.9}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "xgb", "seed": 13, "fit": "single", "ap": 0.5471973653874246, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 54, "sec": 0.9}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "cat", "seed": 11, "fit": "single", "ap": 0.5631396076665256, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 53, "sec": 1.1}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "cat", "seed": 12, "fit": "single", "ap": 0.5633585105496944, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 53, "sec": 1.2}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "cat", "seed": 13, "fit": "single", "ap": 0.5667455898962852, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 53, "sec": 1.4}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "lgbm", "seed": 14, "fit": "single", "ap": 0.543302427547407, "n_specs": 34, "n_applied": 34, "skipped": [], "n_cols": 57, "sec": 1.2}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "lgbm", "seed": 15, "fit": "single", "ap": 0.5456449111482582, "n_specs": 34, "n_applied": 34, "skipped": [], "n_cols": 57, "sec": 7.0}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "xgb", "seed": 14, "fit": "single", "ap": 0.5471973653874246, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 54, "sec": 1.5}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "xgb", "seed": 15, "fit": "single", "ap": 0.5471973653874246, "n_specs": 31, "n_applied": 31, "skipped": [], "n_cols": 54, "sec": 1.0}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "cat", "seed": 14, "fit": "single", "ap": 0.5644392132501015, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 53, "sec": 2.2}
+{"dataset": "credit_default", "arm": "control_s11", "learner": "cat", "seed": 15, "fit": "single", "ap": 0.5599752830505796, "n_specs": 30, "n_applied": 30, "skipped": [], "n_cols": 53, "sec": 1.8}

@@ -1,0 +1,15 @@
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "lgbm", "seed": 11, "fit": "single", "ap": 0.3850798364691381, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 3.4}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "lgbm", "seed": 12, "fit": "single", "ap": 0.38472329514341197, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 4.3}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "lgbm", "seed": 13, "fit": "single", "ap": 0.38395369372975263, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 3.0}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "xgb", "seed": 11, "fit": "single", "ap": 0.3850830213001735, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 3.0}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "xgb", "seed": 12, "fit": "single", "ap": 0.3850830213001735, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 3.1}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "xgb", "seed": 13, "fit": "single", "ap": 0.3850830213001735, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 3.6}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "cat", "seed": 11, "fit": "single", "ap": 0.3825885518054708, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 5.1}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "cat", "seed": 12, "fit": "single", "ap": 0.38342358971641305, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 5.2}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "cat", "seed": 13, "fit": "single", "ap": 0.3829670434126181, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 5.4}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "lgbm", "seed": 14, "fit": "single", "ap": 0.3852516476325375, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 2.1}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "lgbm", "seed": 15, "fit": "single", "ap": 0.3839399073771776, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 2.5}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "xgb", "seed": 14, "fit": "single", "ap": 0.3850830213001735, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 2.1}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "xgb", "seed": 15, "fit": "single", "ap": 0.3850830213001735, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 2.1}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "cat", "seed": 14, "fit": "single", "ap": 0.38250274932638606, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 5.3}
+{"dataset": "vehicleloan", "arm": "control_s11", "learner": "cat", "seed": 15, "fit": "single", "ap": 0.38241018227351187, "n_specs": 36, "n_applied": 36, "skipped": [], "n_cols": 69, "sec": 5.4}

@@ -1,0 +1,318 @@
+{
+ "pairs": [
+  {
+   "dataset": "fraudecom",
+   "learner": "lgbm",
+   "forge": 0.12017243333333334,
+   "forge_psd": 0.0012397647554632635,
+   "forge_seeds": [
+    0.1184541,
+    0.1213333,
+    0.1207299
+   ],
+   "best": "openfe",
+   "best_ap": 0.07487162382049996,
+   "control": 0.037724962443064274
+  },
+  {
+   "dataset": "fraudecom",
+   "learner": "xgb",
+   "forge": 0.12126893333333333,
+   "forge_psd": 0.0009562499057371023,
+   "forge_seeds": [
+    0.1199216,
+    0.1220433,
+    0.1218419
+   ],
+   "best": "octree",
+   "best_ap": 0.051024185254665004,
+   "control": 0.07040859971207228
+  },
+  {
+   "dataset": "fraudecom",
+   "learner": "cat",
+   "forge": 0.12411076666666666,
+   "forge_psd": 0.0020047108126166713,
+   "forge_seeds": [
+    0.126791,
+    0.123571,
+    0.1219703
+   ],
+   "best": "llmfe",
+   "best_ap": 0.08161733499275858,
+   "control": 0.06235456013072283
+  },
+  {
+   "dataset": "sparknov",
+   "learner": "lgbm",
+   "forge": 0.8833784666666666,
+   "forge_psd": 0.004114840823436803,
+   "forge_seeds": [
+    0.8886786,
+    0.8786477,
+    0.8828091
+   ],
+   "best": "caafe",
+   "best_ap": 0.6909225340510409,
+   "control": 0.34632797881226773
+  },
+  {
+   "dataset": "sparknov",
+   "learner": "xgb",
+   "forge": 0.9119959666666667,
+   "forge_psd": 0.0018293636495301544,
+   "forge_seeds": [
+    0.9128699,
+    0.9094502,
+    0.9136678
+   ],
+   "best": "llmfe",
+   "best_ap": 0.7124240214481744,
+   "control": 0.529621779262399
+  },
+  {
+   "dataset": "sparknov",
+   "learner": "cat",
+   "forge": 0.9317193666666667,
+   "forge_psd": 0.011951586866558313,
+   "forge_seeds": [
+    0.9378711,
+    0.9422772,
+    0.9150098
+   ],
+   "best": "openfe",
+   "best_ap": 0.8041534320286621,
+   "control": 0.583089300444454
+  },
+  {
+   "dataset": "banksim",
+   "learner": "lgbm",
+   "forge": 0.9489902333333333,
+   "forge_psd": 0.004573942883576702,
+   "forge_seeds": [
+    0.9549707,
+    0.9481347,
+    0.9438653
+   ],
+   "best": "openfe",
+   "best_ap": 0.9280291658306267,
+   "control": 0.9446580521913773
+  },
+  {
+   "dataset": "banksim",
+   "learner": "xgb",
+   "forge": 0.9433932333333334,
+   "forge_psd": 0.007855270097768055,
+   "forge_seeds": [
+    0.9322846,
+    0.9488663,
+    0.9490288
+   ],
+   "best": "octree",
+   "best_ap": 0.9315189223061261,
+   "control": 0.9458387346321656
+  },
+  {
+   "dataset": "banksim",
+   "learner": "cat",
+   "forge": 0.9504819666666666,
+   "forge_psd": 0.005390000306947014,
+   "forge_seeds": [
+    0.9452856,
+    0.9579099,
+    0.9482504
+   ],
+   "best": "openfe",
+   "best_ap": 0.9303285339391191,
+   "control": 0.9495753649189798
+  },
+  {
+   "dataset": "creditcard",
+   "learner": "lgbm",
+   "forge": 0.7407480666666666,
+   "forge_psd": 0.008517178613184564,
+   "forge_seeds": [
+    0.7302824,
+    0.7511448,
+    0.740817
+   ],
+   "best": "featllm",
+   "best_ap": 0.5897986888637924,
+   "control": 0.5608496584532556
+  },
+  {
+   "dataset": "creditcard",
+   "learner": "xgb",
+   "forge": 0.8060964,
+   "forge_psd": 0.0038290348139794254,
+   "forge_seeds": [
+    0.8063823,
+    0.8012704,
+    0.8106365
+   ],
+   "best": "llmfe",
+   "best_ap": 0.8001981475031686,
+   "control": 0.7999804915099121
+  },
+  {
+   "dataset": "creditcard",
+   "learner": "cat",
+   "forge": 0.8101199333333333,
+   "forge_psd": 0.0037482624964404704,
+   "forge_seeds": [
+    0.8126168,
+    0.812921,
+    0.804822
+   ],
+   "best": "llmfe",
+   "best_ap": 0.808602444884128,
+   "control": 0.8002067173809363
+  },
+  {
+   "dataset": "vehicleloan",
+   "learner": "lgbm",
+   "forge": 0.3835901,
+   "forge_psd": 0.0027459230397081274,
+   "forge_seeds": [
+    0.3873717,
+    0.3809346,
+    0.382464
+   ],
+   "best": "llmfe",
+   "best_ap": 0.37916319355393846,
+   "control": 0.3845856084474342
+  },
+  {
+   "dataset": "vehicleloan",
+   "learner": "xgb",
+   "forge": 0.3835116666666667,
+   "forge_psd": 0.0014294114904004856,
+   "forge_seeds": [
+    0.3849194,
+    0.3815514,
+    0.3840642
+   ],
+   "best": "llmfe",
+   "best_ap": 0.3810003381073853,
+   "control": 0.3850830213001735
+  },
+  {
+   "dataset": "vehicleloan",
+   "learner": "cat",
+   "forge": 0.3813086666666667,
+   "forge_psd": 0.0018840614964013753,
+   "forge_seeds": [
+    0.383814,
+    0.3808415,
+    0.3792705
+   ],
+   "best": "caafe",
+   "best_ap": 0.37625468112004845,
+   "control": 0.38299306164483404
+  },
+  {
+   "dataset": "credit_default",
+   "learner": "lgbm",
+   "forge": 0.5500637,
+   "forge_psd": 0.0009547819541654525,
+   "forge_seeds": [
+    0.5502016,
+    0.5488315,
+    0.551158
+   ],
+   "best": "llmfe",
+   "best_ap": 0.5465565226921512,
+   "control": 0.5501249766313133
+  },
+  {
+   "dataset": "credit_default",
+   "learner": "xgb",
+   "forge": 0.5549971,
+   "forge_psd": 0.003011217216785703,
+   "forge_seeds": [
+    0.5507891,
+    0.5576674,
+    0.5565348
+   ],
+   "best": "caafe",
+   "best_ap": 0.5459556506857081,
+   "control": 0.5471973653874246
+  },
+  {
+   "dataset": "credit_default",
+   "learner": "cat",
+   "forge": 0.5616264333333334,
+   "forge_psd": 0.004337811745057147,
+   "forge_seeds": [
+    0.5562494,
+    0.5617575,
+    0.5668724
+   ],
+   "best": "featllm",
+   "best_ap": 0.5599835993317298,
+   "control": 0.5644145693708351
+  },
+  {
+   "dataset": "twitterbot",
+   "learner": "lgbm",
+   "forge": 0.9117093333333334,
+   "forge_psd": 0.00042213632342592155,
+   "forge_seeds": [
+    0.9111704,
+    0.9117564,
+    0.9122012
+   ],
+   "best": "caafe",
+   "best_ap": 0.9103495906890929,
+   "control": 0.9099772011589914
+  },
+  {
+   "dataset": "twitterbot",
+   "learner": "xgb",
+   "forge": 0.9100518333333333,
+   "forge_psd": 0.0003478844763551176,
+   "forge_seeds": [
+    0.9097529,
+    0.9098629,
+    0.9105397
+   ],
+   "best": "llmfe",
+   "best_ap": 0.9092337598686419,
+   "control": 0.9085345265331121
+  },
+  {
+   "dataset": "twitterbot",
+   "learner": "cat",
+   "forge": 0.9089250333333333,
+   "forge_psd": 0.0005952824558327177,
+   "forge_seeds": [
+    0.9088656,
+    0.9082275,
+    0.909682
+   ],
+   "best": "caafe",
+   "best_ap": 0.9075255692345456,
+   "control": 0.9083657047837997
+  }
+ ],
+ "tests": {
+  "control": {
+   "wins": 15,
+   "median": 0.004332181141955993,
+   "wplus": 194.0,
+   "p": 0.004878997802734375,
+   "ds_wins": 6,
+   "ds_p": 0.078125,
+   "holm": 0.004878997802734375
+  },
+  "best": {
+   "wins": 21,
+   "median": 0.00904144931429196,
+   "wplus": 231.0,
+   "p": 9.5367431640625e-07,
+   "ds_wins": 7,
+   "ds_p": 0.015625,
+   "holm": 1.9073486328125e-06
+  }
+ }
+}
