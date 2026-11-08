@@ -70,7 +70,6 @@ about 0.003 AP between reruns.
 | learners | LightGBM, XGBoost, CatBoost, 400 trees, learning rate 0.05 (Table 3) |
 | seeds | 11, 12, 13 |
 | FORGE proposal model | gpt-5.5 (Codex CLI, reasoning effort medium) |
-| baseline proposal model | gpt-5.6-sol |
 | baselines | official code with our data loader and AP as validation metric, default settings; OCTree with 3 columns x 24 rounds |
 | strongest baseline | best of the five baselines (Table 5) |
 | Pure-LLM control | seed-11 R0 plan of FORGE, all proposals added, single fit |
